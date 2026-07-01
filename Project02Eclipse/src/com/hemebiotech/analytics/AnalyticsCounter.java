@@ -1,60 +1,52 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * Represents an ordered list of symptoms with their number of occurrences. This
- * class allows adding and counting symptoms.
- * 
- */
 public class AnalyticsCounter {
 
-	public static void main(String args[]) throws IOException {
-		
-		/**
-		 * Specialized list ordered on the key by default
-		 */
-		Map<String, Integer> symptoms = new TreeMap<String, Integer>();
+	public static void main(String[] args) {
+		ISymptomReader reader = new ReadSymptomDataFromFile("Project02Eclipse/symptoms.txt");
+		ISymptomWriter writer = new WriteSymptomDataToFile("result.out");
 
-		/**
-		 * Read the file
-		 */
-		try (BufferedReader reader = new BufferedReader(new FileReader("Project02Eclipse/symptoms.txt"))) {
-			String line = reader.readLine();
+		new AnalyticsCounter(reader, writer);
+	}
 
-			while (line != null) {
-				// Add the line if the symptom does not exist; otherwise, increment the value of
-				// the symptom
-				symptoms.merge(line, 1, Integer::sum);
-				line = reader.readLine();
+	private ISymptomReader reader;
+	private ISymptomWriter writer;
+
+	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
+		this.reader = reader;
+		this.writer = writer;
+
+		var symptoms = countSymptoms(getSymptoms());
+
+		writeSymptoms(sortSymptoms(symptoms));
+	}
+
+	public List<String> getSymptoms() {
+		return reader.GetSymptoms();
+	}
+
+	public Map<String, Integer> countSymptoms(List<String> symptoms) {
+		Map<String, Integer> counts = new HashMap<>();
+		for (String symptom : symptoms) {
+			if (symptom == null || symptom.isEmpty()) {
+				continue;
 			}
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			counts.put(symptom, counts.getOrDefault(symptom, 0) + 1);
 		}
+		return counts;
+	}
 
-		/**
-		 * Write in the file
-		 */
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("result.out"))) {
-			symptoms.forEach((key, value) -> {
-				try {
-					writer.write(key + " : " + value);
-					writer.newLine();
-					System.out.println(key + " : " + value);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms) {
+		Map<String, Integer> sortSymptom = new TreeMap<>(symptoms);
+		return sortSymptom;
+	}
+
+	public void writeSymptoms(Map<String, Integer> symptoms) {
+		writer.writeSymptoms(symptoms);
 	}
 }
