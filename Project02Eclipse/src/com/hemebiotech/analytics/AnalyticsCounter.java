@@ -16,19 +16,16 @@ public class AnalyticsCounter {
 	private ISymptomWriter writer;
 
 	/**
-	 * Constructs an AnalyticsCounter with the given reader and writer.
-	 * Automatically performs the full analysis workflow: reading symptoms, counting
-	 * occurrences, sorting them, and writing the results.
-	 * 
+	 * Initializes the analytics process with the given reader and writer. Reads,
+	 * counts, sorts, and writes symptom data.
+	 *
 	 * @param reader the component used to read symptom data
 	 * @param writer the component used to write the processed results
 	 */
 	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
 		this.reader = reader;
 		this.writer = writer;
-
 		var symptoms = countSymptoms(getSymptoms());
-
 		writeSymptoms(sortSymptoms(symptoms));
 	}
 
@@ -38,7 +35,7 @@ public class AnalyticsCounter {
 	 * @return a list of symptom strings
 	 */
 	public List<String> getSymptoms() {
-		return reader.GetSymptoms();
+		return reader.getSymptoms();
 	}
 
 	/**
@@ -47,7 +44,6 @@ public class AnalyticsCounter {
 	 * @param symptoms the list of symptoms
 	 * @return a map where keys are symptoms and values are their occurrence counts
 	 */
-
 	public Map<String, Integer> countSymptoms(List<String> symptoms) {
 		Map<String, Integer> counts = new HashMap<>();
 		for (String symptom : symptoms) {
@@ -75,7 +71,6 @@ public class AnalyticsCounter {
 	 * 
 	 * @param symptoms a map of symptoms and their counts
 	 */
-
 	public void writeSymptoms(Map<String, Integer> symptoms) {
 		writer.writeSymptoms(symptoms);
 	}

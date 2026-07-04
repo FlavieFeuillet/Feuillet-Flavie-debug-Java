@@ -6,17 +6,28 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Simple brute force implementation
- *
+ * Implementation of ISymptomWriter that writes symptom data to a file. Each
+ * symptom and its occurrence count are written on a separate line in the
+ * format: "symptom : count".
  */
 public class WriteSymptomDataToFile implements ISymptomWriter {
-	
+
 	private String filepath;
-	
-	public WriteSymptomDataToFile (String filepath) {
-		this.filepath= filepath;		
+
+	/**
+	 * Creates a writer that outputs symptom data to the specified file.
+	 * 
+	 * @param filepath the path to the output file
+	 */
+	public WriteSymptomDataToFile(String filepath) {
+		this.filepath = filepath;
 	}
 
+	/**
+	 * Writes the list of symptoms and their occurrence counts to the file.
+	 * 
+	 * @param symptoms a map where the key is the symptom name and the value is its number of occurrences
+	 */
 	@Override
 	public void writeSymptoms(Map<String, Integer> symptoms) {
 
@@ -31,11 +42,11 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
 				}
 			});
 			writer.close();
-		
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-		
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

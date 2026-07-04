@@ -3,12 +3,16 @@ package com.hemebiotech.analytics;
 import java.util.Map;
 
 /**
- * Write to the output file
+ * Defines a contract for writing symptom data to an output destination.
+ * Implementations of this interface are responsible for formatting and writing
+ * the list of symptoms along with their occurrence counts.
  */
 public interface ISymptomWriter {
 	/**
-	 * Write to the output file the complete list of symptoms sorted in alphabetical
-	 * order, along with their number of occurrences
+	 * Writes the given symptoms and their occurrence counts.
+	 * 
+	 * @param symptoms a map where the key is the symptom name and the value is its
+	 * number of occurrences
 	 */
 	public void writeSymptoms(Map<String, Integer> symptoms);
 }
