@@ -8,6 +8,7 @@ import java.util.Map;
  * the list of symptoms along with their occurrence counts.
  */
 public interface ISymptomWriter {
+	
 	/**
 	 * Writes the given symptoms and their occurrence counts.
 	 * 

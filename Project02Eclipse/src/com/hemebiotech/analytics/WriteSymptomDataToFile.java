@@ -30,23 +30,18 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
 	 */
 	@Override
 	public void writeSymptoms(Map<String, Integer> symptoms) {
-
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
 			symptoms.forEach((key, value) -> {
-				try {
-					writer.write(key + " : " + value);
-					writer.newLine();
-					System.out.println(key + " : " + value);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+					try {
+						writer.write(key + " : " + value);
+						writer.newLine();
+						System.out.println(key + " : " + value);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 			});
-			writer.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

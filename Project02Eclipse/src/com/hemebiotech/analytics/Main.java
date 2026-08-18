@@ -1,5 +1,8 @@
 package com.hemebiotech.analytics;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Main entry point of the application. This class initializes the required
  * components (reader and writer) and executes the symptom analysis workflow:
@@ -23,7 +26,10 @@ public class Main {
 		/**
 		 * AnalyticsCounter object instantiation
 		 */
-		new AnalyticsCounter(reader, writer);
+		AnalyticsCounter counter = new AnalyticsCounter(reader, writer);
+		List<String> symptoms = counter.getSymptoms();
+		Map<String, Integer> counts = counter.countSymptoms((List<String>) symptoms);
+		Map<String, Integer> sortSymptom = counter.sortSymptoms(counts);
+		counter.writeSymptoms(sortSymptom);
 	}
-
 }

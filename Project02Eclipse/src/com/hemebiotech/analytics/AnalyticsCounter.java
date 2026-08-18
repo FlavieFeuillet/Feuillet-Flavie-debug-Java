@@ -25,8 +25,6 @@ public class AnalyticsCounter {
 	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
 		this.reader = reader;
 		this.writer = writer;
-		var symptoms = countSymptoms(getSymptoms());
-		writeSymptoms(sortSymptoms(symptoms));
 	}
 
 	/**

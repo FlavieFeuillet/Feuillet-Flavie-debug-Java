@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * /** Implementation of ISymptomReader that reads symptom data from a file. The
+ * Implementation of ISymptomReader that reads symptom data from a file. The
  * file path is specified at instantiation and used to load the data. Each line
  * in the file is expected to represent a symptom entry.
  */
@@ -21,8 +21,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	 * responsible for loading and providing the raw symptom data for further
 	 * processing.
 	 * 
-	 * @param filepath a full or partial path to file with symptom strings in it,
-	 *                 one per line
+	 * @param filepath the path to the output file
 	 */
 	public ReadSymptomDataFromFile(String filepath) {
 		this.filepath = filepath;
@@ -38,14 +37,11 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	public List<String> getSymptoms() {
 		ArrayList<String> result = new ArrayList<String>();
 		if (filepath != null) {
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(filepath));
-				String line = reader.readLine();
-				while (line != null) {
+			try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
 					result.add(line);
-					line = reader.readLine();
 				}
-				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
